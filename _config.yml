@@ -7,7 +7,7 @@ title: Zack's blog
 subtitle:
 description:
 author: Zack Ren
-language:
+language: zh-Hans
 timezone:
 
 # URL
@@ -63,7 +63,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: iissnan
+theme: next
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
