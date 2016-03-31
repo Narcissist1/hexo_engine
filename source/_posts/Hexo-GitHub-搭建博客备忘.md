@@ -42,7 +42,8 @@ Hexo 的实用[插件](https://hexo.io/plugins/)
 其中 hexo-admin 无法在线上使用，可以在本地编辑完之后部署即可，地址为根目录＋/admin/，具体配置在[这里](https://github.com/jaredly/hexo-admin)
 
 ## GitHub 账号申请和新建项目
-----------------------------------* 登录到你的[GitHub](http://github.com/)账号
+----------------------------------
+* 登录到你的[GitHub](http://github.com/)账号
 * 选择新建醒目，项目名称需要设置为`your_username.github.io`
 * 首次创建需要10分钟左右的审核时间，之后就可以访问了`http://your_username.github.io` (现在访问可能会导致404，因为项目还是空的)
 
