@@ -5,7 +5,7 @@
 # Site
 title: Zack's blog
 subtitle:
-description: 
+description: 长路漫漫，砥砺前行
 author: Zack Ren
 language: zh-Hans
 timezone:
@@ -73,4 +73,26 @@ deploy:
   branch: master
 
 # myself
-avatar: source/media/profile_photo.jpg
+avatar: media/profile_photo.jpg
+duoshuo_shortname: narcissit1
+jiathis: true
+
+plugins: hexo-qiniu-sync
+
+qiniu:
+  offline: false
+  sync: true
+  bucket: narcissist1
+  access_key: Zsp_jOhJM0nDohO4yuXRgIjOY_ilhWJXHHN13ZAW
+  secret_key: DWabnJ3aZfESDrObMuynIYbQzhQou8LhtuNSBZ3K
+  dirPrefix: static
+  urlPrefix: http://7xsgwt.com1.z0.glb.clouddn.com/static
+  local_dir: static
+  update_exist: true
+  image: 
+    folder: images
+    extend: 
+  js:
+    folder: js
+  css:
+    folder: css
