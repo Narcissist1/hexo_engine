@@ -10,7 +10,7 @@ categories:
 
 {% qnimg kd1.jpg alt:垦丁海边 %}
 {% qnimg kd2.jpg alt:垦丁海边 %}
-{% qnimg kd3.jpg alt:垦丁海边 %}
 <!-- more -->
+{% qnimg kd3.jpg alt:垦丁海边 %}
 {% qnimg kd4.jpg alt:垦丁海边 %}
 {% qnimg kd5.jpg alt:垦丁海边 %}

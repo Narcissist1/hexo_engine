@@ -3,7 +3,7 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Zack's blog
+title: Zack's Notebook
 subtitle:
 description: 长路漫漫，砥砺前行
 author: Zack Ren
@@ -73,7 +73,7 @@ deploy:
   branch: master
 
 # myself
-avatar: media/profile_photo.jpg
+avatar: /media/profile_photo.jpg
 duoshuo_shortname: narcissit1
 jiathis: true
 
