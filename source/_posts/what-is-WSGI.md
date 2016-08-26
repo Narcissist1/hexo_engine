@@ -32,10 +32,12 @@ WSGI区分为两个部分：一为“服务器”或“网关”，另一为“�
 
 用Python语言写的一个符合WSGI的“Hello World”应用程序如下所示：
 
-	def app(environ, start_response):
-    	start_response('200 OK', [('Content-Type', 'text/plain')])
-    	yield "Hello world!\n"
- 
+```py
+def app(environ, start_response):
+	start_response('200 OK', [('Content-Type', 'text/plain')])
+	yield "Hello world!\n"
+```
+
 其中
 
 * 第一行定义了一个名为app的callable[2]，接受两个参数，environ和start_response，environ是一个字典包含了CGI中的环境变量，start_response也是一个callable，接受两个必须的参数，status（HTTP状态）和response_headers（响应消息的头）。

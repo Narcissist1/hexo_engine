@@ -13,15 +13,17 @@ property() 方法返回了一个特殊的 [descriptor object](https://docs.pytho
 
 创建一个新式类 C，以及一个 p 属性：
 
-	class C(...):
-	    def R(self):
-	        ...read method...
-	    def W(self, value):
-	        ...write method...
-	    def D(self):
-	        ...delete method...
-	    p = property(R, W, D, doc)
-	    ...
+```py
+class C(...):
+    def R(self):
+        ...read method...
+    def W(self, value):
+        ...write method...
+    def D(self):
+        ...delete method...
+    p = property(R, W, D, doc)
+    ...
+```
 
 <!--more-->
 * R 是一个不带参数的 `getter` 方法，返回属性的值，如果不提供此方法，任何读操作都会引起`AttributeError`
@@ -33,19 +35,21 @@ property() 方法返回了一个特殊的 [descriptor object](https://docs.pytho
 
 以下是一个小的类带有属性 x:
 
-	class C(object):
-	    def __init__(self):
-	        self.__x=None
-	    def getx(self):
-	        print "+++ getx()"
-	        return self.__x
-	    def setx(self, v):
-	        print "+++ setx({0})".format(v)
-	        self.__x  =  v
-	    def delx(self):
-	        print "+++ delx()"
-	        del self.__x
-	    x=property(getx, setx, delx, "Me property 'x'.")
+```py
+class C(object):
+    def __init__(self):
+        self.__x=None
+    def getx(self):
+        print "+++ getx()"
+        return self.__x
+    def setx(self, v):
+        print "+++ setx({0})".format(v)
+        self.__x  =  v
+    def delx(self):
+        print "+++ delx()"
+        del self.__x
+    x=property(getx, setx, delx, "Me property 'x'.")
+```
 
 在 python 解释器中执行：
 
@@ -74,24 +78,28 @@ property() 方法返回了一个特殊的 [descriptor object](https://docs.pytho
 
 比如你需要给你的类提供一个 state 属性，而你的 getter 方法返回一个私有的属性 ._state。你可以这样定义：
 
-	@property
-    def state(self):
-        '''The internal state property.'''
-        return self._state
+```py
+@property
+def state(self):
+    '''The internal state property.'''
+    return self._state
+```
 
 这样 .state 将会是这个属性的 getter 方法，而且 文档字符串'''The internal state property.''' 也会被存储在属性中。
 
 如果你需要 setter 和 deleter 方法：
 
-	@state.setter
-    def state(self, k):
-        if not (0 <= k <= 2):
-            raise ValueError("Must be 0 through 2 inclusive!")
-        else:
-            self._state = k
-            
-    @state.deleter
-    def state(self):
-        del self._state
+```py
+@state.setter
+def state(self, k):
+    if not (0 <= k <= 2):
+        raise ValueError("Must be 0 through 2 inclusive!")
+    else:
+        self._state = k
+        
+@state.deleter
+def state(self):
+    del self._state
+```
 
     

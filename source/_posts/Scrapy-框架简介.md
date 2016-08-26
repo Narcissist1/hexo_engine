@@ -73,14 +73,16 @@ Item 相当于一个包含抓取来的数据的一个容器，它们和 Python �
 通过创建 `scrapy.Item` 类和相应的 `srapy.Field` 属性来定义它， 这有点像一个 ORM，（django ORM 或者 SQLAlchemy）。
 
 在本教程中我们希望抓取 title, 链接和描述，所以，修改 tutorial 目录下的  item.py 文件：
-	
-	import scrapy
 
-	class DmozItem(scrapy.Item):
-    	title = scrapy.Field()
-    	link = scrapy.Field()
-    	desc = scrapy.Field()
-    	
+```py	
+import scrapy
+
+class DmozItem(scrapy.Item):
+	title = scrapy.Field()
+	link = scrapy.Field()
+	desc = scrapy.Field()
+```
+
 ## 第一个 Spider
 
 Spider 是一些你定义的类。用于让 Scrapy 去从一个 domain 或者 URL 来爬取你需要的数据。
@@ -92,21 +94,23 @@ Spider 是一些你定义的类。用于让 Scrapy 去从一个 domain 或者 UR
 * `parse()`: spider 的一个方法，每一个 response 都会调用这个方法，它负责解析 response 中的数据，提取更多的 URL
 
 本教程中，在`tutorial/spiders`目录下保存`dmoz_spider.py` 作为第一个 spider 内容如下：
-	
-	import scrapy
 
-	class DmozSpider(scrapy.Spider):
-    	name = "dmoz"
-    	allowed_domains = ["dmoz.org"]
-    	start_urls = [
-        	"http://www.dmoz.org/Computers/Programming/Languages/Python/Books/",
-       		"http://www.dmoz.org/Computers/Programming/Languages/Python/Resources/"
-    	]
+```py	
+import scrapy
 
-    def parse(self, response):
-        filename = response.url.split("/")[-2] + '.html'
-        with open(filename, 'wb') as f:
-            f.write(response.body)
+class DmozSpider(scrapy.Spider):
+	name = "dmoz"
+	allowed_domains = ["dmoz.org"]
+	start_urls = [
+    	"http://www.dmoz.org/Computers/Programming/Languages/Python/Books/",
+   		"http://www.dmoz.org/Computers/Programming/Languages/Python/Resources/"
+	]
+
+def parse(self, response):
+    filename = response.url.split("/")[-2] + '.html'
+    with open(filename, 'wb') as f:
+        f.write(response.body)
+```
 
 ### 爬取
 
@@ -165,24 +169,25 @@ Scrapy Selector 使用两种机制 [CSS](https://www.w3.org/TR/selectors/) 和 [
 通过查看`response.body` 我们发现需要的信息在<ul>标签里面，
 
 在我们的 spider 里面加入以下代码：
-	
-	import scrapy
-	
-	class DmozSpider(scrapy.Spider):
-    name = "dmoz"
-    allowed_domains = ["dmoz.org"]
-    start_urls = [
-        "http://www.dmoz.org/Computers/Programming/Languages/Python/Books/",
-        "http://www.dmoz.org/Computers/Programming/Languages/Python/Resources/"
-    ]
 
-    def parse(self, response):
-        for sel in response.xpath('//ul/li'):
-            title = sel.xpath('a/text()').extract()
-            link = sel.xpath('a/@href').extract()
-            desc = sel.xpath('text()').extract()
-            print title, link, desc
+```py	
+import scrapy
 
+class DmozSpider(scrapy.Spider):
+name = "dmoz"
+allowed_domains = ["dmoz.org"]
+start_urls = [
+    "http://www.dmoz.org/Computers/Programming/Languages/Python/Books/",
+    "http://www.dmoz.org/Computers/Programming/Languages/Python/Resources/"
+]
+
+def parse(self, response):
+    for sel in response.xpath('//ul/li'):
+        title = sel.xpath('a/text()').extract()
+        link = sel.xpath('a/@href').extract()
+        desc = sel.xpath('text()').extract()
+        print title, link, desc
+```
 
 ### 使用我们的Item
 
@@ -195,25 +200,27 @@ Item objects 是一个 Python 字典，你可以像使用字典那样使用它�
 
 我们修改 spider 的代码：
 
-	import scrapy
-	
-	from tutorial.items import DmozItem
-	
-	class DmozSpider(scrapy.Spider):
-    name = "dmoz"
-    allowed_domains = ["dmoz.org"]
-    start_urls = [
-        "http://www.dmoz.org/Computers/Programming/Languages/Python/Books/",
-        "http://www.dmoz.org/Computers/Programming/Languages/Python/Resources/"
-    ]
+```py
+import scrapy
 
-    def parse(self, response):
-        for sel in response.xpath('//ul/li'):
-            item = DmozItem()
-            item['title'] = sel.xpath('a/text()').extract()
-            item['link'] = sel.xpath('a/@href').extract()
-            item['desc'] = sel.xpath('text()').extract()
-            yield item
+from tutorial.items import DmozItem
+
+class DmozSpider(scrapy.Spider):
+name = "dmoz"
+allowed_domains = ["dmoz.org"]
+start_urls = [
+    "http://www.dmoz.org/Computers/Programming/Languages/Python/Books/",
+    "http://www.dmoz.org/Computers/Programming/Languages/Python/Resources/"
+]
+
+def parse(self, response):
+    for sel in response.xpath('//ul/li'):
+        item = DmozItem()
+        item['title'] = sel.xpath('a/text()').extract()
+        item['link'] = sel.xpath('a/@href').extract()
+        item['desc'] = sel.xpath('text()').extract()
+        yield item
+```
 
 现在运行代码会得到`DmozItem` objects:
 
@@ -231,29 +238,31 @@ Item objects 是一个 Python 字典，你可以像使用字典那样使用它�
 仅仅提取两个页面的内容显然是不够的，如果我们需要提取链接在这两个页面上的链接以及它们的全部内容呢。
 这里修改我们的代码：
 
-	import scrapy
-	
-	from tutorial.items import DmozItem
-	
-	class DmozSpider(scrapy.Spider):
-    name = "dmoz"
-    allowed_domains = ["dmoz.org"]
-    start_urls = [
-        "http://www.dmoz.org/Computers/Programming/Languages/Python/",
-    ]
+```py
+import scrapy
 
-    def parse(self, response):
-        for href in response.css("ul.directory.dir-col > li > a::attr('href')"):
-            url = response.urljoin(href.extract())
-            yield scrapy.Request(url, callback=self.parse_dir_contents)
+from tutorial.items import DmozItem
 
-    def parse_dir_contents(self, response):
-        for sel in response.xpath('//ul/li'):
-            item = DmozItem()
-            item['title'] = sel.xpath('a/text()').extract()
-            item['link'] = sel.xpath('a/@href').extract()
-            item['desc'] = sel.xpath('text()').extract()
-            yield item
+class DmozSpider(scrapy.Spider):
+name = "dmoz"
+allowed_domains = ["dmoz.org"]
+start_urls = [
+    "http://www.dmoz.org/Computers/Programming/Languages/Python/",
+]
+
+def parse(self, response):
+    for href in response.css("ul.directory.dir-col > li > a::attr('href')"):
+        url = response.urljoin(href.extract())
+        yield scrapy.Request(url, callback=self.parse_dir_contents)
+
+def parse_dir_contents(self, response):
+    for sel in response.xpath('//ul/li'):
+        item = DmozItem()
+        item['title'] = sel.xpath('a/text()').extract()
+        item['link'] = sel.xpath('a/@href').extract()
+        item['desc'] = sel.xpath('text()').extract()
+        yield item
+```
 
 现在 *parse()* 方法仅仅提取我们需要的URL，再用 *response.urljoin* 方法合成全局路径用以之后请求。在请求这些 URL 时，注册了一个 *parse_dir_contents()* callback 函数， 作为实际的内容提取。
 
