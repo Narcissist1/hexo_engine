@@ -25,10 +25,9 @@ categories: 技术相关
 
 在里面加上如下行：
 
-
 	export PYTHONPATH="${PYTHONPATH}:/your/path"
 
-推出 vim 后运行，使其生效
+退出 vim 后运行，使其生效
 
 	source .bashrc
 
