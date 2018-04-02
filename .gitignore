@@ -3,4 +3,6 @@ public/
 db.json
 static/
 _config.yml
-
+node_modules/
+package-lock.json
+.DS_Store
